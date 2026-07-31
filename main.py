@@ -14,8 +14,9 @@ OPENAI_API_TOKEN=os.environ.get("OPENAI_API_TOKEN")
 @tool
 def writing_code(filepath:str,content:str)->str:
     """ Ecris ou remplace entierement le contenu d un fichier
-    Args: 
-        filepath: le chemin du fichier (exemple : code.py ici pas dans main.py)
+    
+    Args:
+        filepath: le chemin du fichier (exemple, code.py ici pas dans main.py)
         content: le nouveau contenu complet du fichier
     """
     with open(filepath,"w",encoding="utf-8") as f:
@@ -26,11 +27,13 @@ def writing_code(filepath:str,content:str)->str:
 @tool
 def read_file(filepath:str)->str:
     """ Lis le contenu d un fichier 
+    
     Args:
-    filepath: le chemin du fichier a lire
+        filepath: le chemin du fichier a lire
     """
     with open(filepath,"r",encoding="utf-8") as f:
-        f.read()
+        return f.read()
+        
         
 
 model = OpenAIServerModel(
@@ -41,6 +44,9 @@ model = OpenAIServerModel(
 agent = CodeAgent(
     tools=[read_file,writing_code],
     model=model,
+    instructions="Quand on te demande de modifier du code, utilise TOUJOURS l'outil "
+                 "writing_code pour sauvegarder le résultat sur disque. Ne te contente "
+                 "jamais de donner le code en texte dans ta réponse finale."
 )
 
-agent.run("Ajoute un commentaire sur chaque ligne de code du fichier code et fais moi une autre fonction qui soustrait a avec b")
+agent.run("Créer moi 2 fonctions dans code.py une qui fais la division et l autre qui fait une addition")
