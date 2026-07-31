@@ -1,0 +1,1 @@
+Non en fait je souhaite que mes fonctions de calcul aient des retours comme ca lorsque j execute code.py j ai directeremnt des trucs affichés à l ecran

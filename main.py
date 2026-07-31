@@ -9,6 +9,8 @@ load_dotenv()
 
 OPENAI_API_TOKEN=os.environ.get("OPENAI_API_TOKEN")
 
+with open("PROMPT.md","r",encoding="utf-8") as f:
+    PROMPT_USER=f.read()
 
 
 @tool
@@ -49,4 +51,4 @@ agent = CodeAgent(
                  "jamais de donner le code en texte dans ta réponse finale."
 )
 
-agent.run("Créer moi 2 fonctions dans code.py une qui fais la division et l autre qui fait une addition")
+agent.run(PROMPT_USER,reset="false")
